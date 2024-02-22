@@ -1,0 +1,2 @@
+# Strk-GameItemTradingCenter
+基于StarkNet网络的全链游戏道具物品交易中心模组，可让全链游戏专注游戏内容开发，游戏通用道具等可接入该模组完成交易市场构建
