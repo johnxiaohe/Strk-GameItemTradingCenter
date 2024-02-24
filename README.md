@@ -1,65 +1,124 @@
 # GOLD
-基于StarkNet网络的全链游戏道具物品交易中心模组，可让全链游戏专注游戏内容开发，游戏通用道具等可接入该模组完成交易市场构建。
+
+## 介绍
+GOLD是基于StarkNet网络，服务于全链游戏的道具交易中心模块。该模块专注于游戏相关的交易核心功能，游戏项目可通过接入该模块快速实现道具交易行功能，以节省开发时间。另外还可通过该模块构建游戏外账号交易和游戏道具-Token的购售功能。  
 
 ## 背景
-一个好的吸引人的WEB3链想要吸引更多开发者来此开发，应该提供出更便利的开发工具、开发框架或者链上合作生态模组，来帮助项目团队更快速的完成项目开发搭建。而在游戏领域，交易行在网游中基本又必不可少却又时长可以引发安全漏洞的一环，这个会让开发团队费神费时从而耽误开发进度，尤其是WEB3领域链游玩家对交易属性尤其看重，如果可以提供出来一个安全可靠的交易行模块供项目组直接接入可以保证项目组将主要精力放在打磨游戏玩法上，更快的完成项目。并且该项目又将保证其安全性和物品丢失的赔付问题。
+该灵感来自第一节课的老师对链上合约开发的介绍，期间老师多次提起全链游戏。说明现在Starknet的性能已经非常高了，项目方有信心并且正在吸引更多的对交易性能有要求的游戏厂商来开发项目。一条链性能越好、基础工具设施越完善(生态)将会更加促进项目在该链上创建，形成良性循环，上升趋势。  
+基于这个想法，如果链上有更多对游戏开发(RPG游戏为主)有帮助，如加速游戏开发时间(现在行业内卷就是比上线时间)、为玩家提供安全交易(链的使用方)。那么将会吸引更多游戏项目选择Starknet、吸引更多用户选择Starknet上的游戏游玩。尤其是WEB3的玩家，对交易属性尤为看重。  
+现在WEB2的网游用户通过第三方平台或者担保交易进行道具交换和变现时，进而时常有道具、账号找回问题发生，造成经济损失。所以全链游戏天然有安全优势，可以在项目上线前通过接入合约保证此类安全问题发生。  
 
-## 功能
-出售
-求购
-拍卖
-提供接口调用
-https://github.com/starkware-libs/cairo/blob/main/docs/reference/src/components/cairo/modules/language_constructs/pages/naming-conventions.adoc
+## 解决问题
+1. 减少开发时间，让开发商专注游戏核心玩法开发  
+2. 交易行功能也是游戏BUG重灾区，作为交易属性的合约通过审查后可免除很多交易漏洞，提高安全性  
+3. 游戏内部道具繁多，要支持外部交易平台，耗时耗力，还可能发生欺诈问题，并且影响游戏体验  
+4. 支持游戏账号交易，减少玩家入坑局限，增加WEB3玩家变现渠道(私钥无法交易的特性)  
 
-scarb new projectname
-scarb cairo-run
-scarb test
+## 功能设计
+>交易模块是一个saas模块，支持各种游戏将自己的元信息预录入
+>玩家可以通过交易模块 完成 游戏支持交易的 指定类型 指定道具 以下动作
+>发布求购、出售 订单
+>发布拍卖订单
+>浏览求购、出售 订单
+>游戏账号浏览、出售、购买(交易玩家账户在游戏中对应的身份标识proxy id)  
 
-环境准备
-stark账户创建工具  starkli
-curl https://get.starkli.sh | sh
-. /home/codespace/.starkli/env
-starkliup -v 0.1.20
-升级: starkliup
+#### 项目管理  
+> 接入交易行之前，需要项目先在交易行录入创建项目元信息  
+##### 元信息  
+游戏名称  
+游戏介绍  
+发行商  
+官网  
+LOGO  
+背景图片  
+官方账户  
+税率(扣税打到官方账户中)  
+CLASS_HASH_ARR
+上架限额(出售,求购商品数量)
+金币道具(gold)  
+1. 道具名称  
+2. LOGO_URL  
+3. 道具ID  
+区服  
+1. 区服名称  
+2. 区服ID  
+3. 区服介绍  
+4. 区服地址(用于回调校验)  
+道具  
+1. 道具名称  
+2. 道具介绍  
+3. 道具ID  
+4. LOGO_URL  
+5. 地板价
+6. 支持交易方式[gold,后续支持官方erc20代币或其他代币交易]  
 
-账号创建
-创建密钥存放位置
-mkdir ~/.starknet_accounts
-生成私钥
-starkli signer keystore new ~/.starknet_accounts/key.json
-输入私钥密码  Enter password: 
-生成: Public key
+##### 功能  
+创建项目  
+修改项目  
+新增、修改区服信息  
+新增、修改分类信息  
+新增、修改道具信息  
 
-配置私钥到环境变量
-export STARKNET_KEYSTORE=~/.starknet_accounts/key.json
-配置RPC节点地址
-export STARKNET_RPC=https://starknet-testnet.public.blastapi.io
+#### 订单管理  
+##### 上架(创建上架订单)  
+订单ID
+账户ID  
+道具ID
+出售总量(预扣除)  
+交易方式  
+单价  
+剩余数量  
+购买日志[]  
+状态: 完成，撤销
+##### 购买(完成上架订单,创建购买日志)  
+订单ID
+账户ID  
+道具ID
+购买数量  
+支付金额  
 
-创建账户(生成json的账户配置文件)
-starkli account oz init ~/.starknet_accounts/starkli.json
-部署账户
-starkli account deploy ~/.starknet_accounts/starkli.json
+##### 求购(创建求购订单)  
+订单ID
+账户ID  
+道具ID
+求购总量  
+交易方式  
+单价  
+剩余求购  
+出售日志[]  
+状态: 完成,撤销
 
-合约调用
-调用合约查询api
-starkli call 0x0091efcd6807d63d83ceb1ce1912c039d7533cfbe54e820711ce406e726b2d4a name
-转换字符串
-starkli parse-cairo-string 字符串16进制码
+##### 出售(完成求购订单,创建出售日志)  
+订单ID
+账户ID  
+道具ID
+出售数量  
+交易金额  
+交易方式  
 
-配置starknet账户地址到环境变量
-export STARKNET_ACCOUNT=~/.starknet_accounts/starkli.json
+##### 拍卖(创建拍卖出售订单)  
+订单ID  
+账户ID  
+道具ID  
+道具数量  
+交易方式  
+一口价  
+拍卖底价  
+加价floor  
+竞拍日志[]  
+状态: 完成,撤销  
+##### 竞拍(完成拍卖订单,创建竞拍日志)  
+订单ID  
+账户ID  
+道具ID  
+竞拍金额  
+竞拍类型: 一口价、加价
+是否结束  
 
-调用合约方法发送交易
-starkli invoke 0x0091efcd6807d63d83ceb1ce1912c039d7533cfbe54e820711ce406e726b2d4a mint u256:10000
+##### 我的订单
+出售订单列表
+求购订单列表
+拍卖订单列表
 
-starkli call 0x0091efcd6807d63d83ceb1ce1912c039d7533cfbe54e820711ce406e726b2d4a balanceOf account_address
-
-部署合约
-scarb build 
-上传编译文件
-starkli declare target/dev/contract_class.json
-部署合约
-starkli deploy class_hash construct_args(eg. str:HELLO str:HE 18)
-
-领水
-https://faucet.goerli.starknet.io
+#### 账号出售  
+loading
