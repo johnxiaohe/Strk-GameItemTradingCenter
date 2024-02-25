@@ -21,9 +21,10 @@ pub mod ERC20{
     use starknet::ContractAddress;
     use starknet::get_caller_address;
     use core::integer::BoundedInt;
+    use starknet::contract_address_const;
 
     // 声明hash store宏定义,可以让该结构体作为Map的 key、value使用
-    #[derive(Drop, Hash, starknet::Store)]
+    #[derive(Drop, Debug, Hash, starknet::Store)]
     struct test{
         name: felt252,
         symbol: felt252
@@ -45,14 +46,14 @@ pub mod ERC20{
 
     // 事件声明
     #[event]
-    #[derive(Drop, PartialEq, starknet::Event)]
+    #[derive(Drop, Debug, PartialEq, starknet::Event)]
     pub enum Event{
         Transfer: Transfer,
         Approval: Approval,
     }
 
     // 事件实现
-    #[derive(Drop, PartialEq, starknet::Event)]
+    #[derive(Drop, Debug, PartialEq, starknet::Event)]
     pub struct Transfer{
         // #[key]表示可支持检索的字段
         #[key]
@@ -62,7 +63,7 @@ pub mod ERC20{
         pub value: u256
     }
 
-    #[derive(Drop, PartialEq, starknet::Event)]
+    #[derive(Drop, Debug, PartialEq, starknet::Event)]
     pub struct Approval{
         #[key]
         pub owner: ContractAddress,
@@ -139,8 +140,7 @@ pub mod ERC20{
             let caller = get_caller_address();
             self._total_supply.write(self._total_supply.read() + amount);
             self._balances.write(caller, self._balances.read(caller) + amount);
-            self.emit(Event::Transfer(Transfer{from: caller, to: caller, value: amount}));
-
+            self.emit(Event::Transfer(Transfer{from: contract_address_const::<0>(), to: caller, value: amount}));
         }
     }
 
