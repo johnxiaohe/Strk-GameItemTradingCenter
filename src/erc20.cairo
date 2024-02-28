@@ -144,7 +144,7 @@ pub mod ERC20{
         }
     }
 
-    // 内部方法
+    // 私有方法
     #[generate_trait]
     impl StorageImpl of StorageTrait{
         fn transfer_helper(
