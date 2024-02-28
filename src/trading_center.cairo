@@ -1,9 +1,33 @@
 use starknet::ContractAddress;
+use tradingcenter::model::{game,item,sell};
 
 #[starknet::interface]
 pub trait IGameItemTradingCenter<TContractState> {
+    // 游戏元数据管理
     fn gameSingup(self: @TContractState);
     fn gameUpdate(self: @TContractState);
+    fn addItem(self: @TContractState, item: item);
+    fn updateItem(self: @TContractState, item: item);
+
+    // 寄售管理
+    fn consignment(self: @TContractState);
+    fn buy(self: @TContractState);
+    fn consignmentOrders(self: @TContractState);
+
+    fn wantToBuy(self: @TContractState);
+    fn sell(self: @TContractState);
+    fn wantToBuyOrders(self: @TContractState);
+
+    // 拍卖管理
+    fn auction(self: @TContractState);
+    fn bid(self: @TContractState);
+    fn bids(self: @TContractState);
+    fn grab(self: @TContractState);
+
+    // 个人管理
+    fn mySell(self: @TContractState);
+    fn myBuy(self: @TContractState);
+    fn myBid(self: @TContractState);
     
 }
 
@@ -15,9 +39,13 @@ mod  GameItemTradingCenter{
     use starknet::get_caller_address;
     use core::integer::BoundedInt;
     use starknet::contract_address_const;
+    use tradingcenter::model::{game,item,sell};
 
     #[storage]
     struct Storage {
+        _game_index: u256,
+        _log_index: u256,
+        _name: felt252,
     }
 
     #[event]
