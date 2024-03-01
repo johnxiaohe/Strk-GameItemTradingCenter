@@ -1,15 +1,15 @@
-use tradingcenter::model::{Game,Item,Sell,Buy};
+use tradingcenter::model::{Game,Item,Order,Buy};
 
 #[starknet::interface]
 pub trait IGameItemTradingCenter<TContractState> {
     // 游戏元数据管理
     fn gameSingup(ref self: TContractState, game: Game);
-    fn gameUpdate(self: @TContractState);
-    fn addItem(self: @TContractState, item: Item);
-    fn updateItem(self: @TContractState, item: Item);
+    fn gameUpdate(ref self: TContractState, game: Game);
+    fn addItem(ref self: TContractState, item: Item);
+    fn updateItem(ref self: TContractState, item: Item);
 
     // 寄售管理
-    fn consignment(self: @TContractState);
+    fn consignment(ref self: TContractState, itemId: u256, amount: u256, price: u256);
     fn buy(self: @TContractState);
     fn consignmentOrders(self: @TContractState);
 

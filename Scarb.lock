@@ -2,5 +2,13 @@
 version = 1
 
 [[package]]
+name = "alexandria_storage"
+version = "0.3.0"
+source = "git+https://github.com/keep-starknet-strange/alexandria.git#e7b69575f92076e96a83a76efa6bed3c32a15f9f"
+
+[[package]]
 name = "tradingcenter"
 version = "0.1.0"
+dependencies = [
+ "alexandria_storage",
+]

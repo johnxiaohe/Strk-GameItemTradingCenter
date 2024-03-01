@@ -1,36 +1,51 @@
 use starknet::ContractAddress;
 
-#[derive(Drop, Debug, starknet::Store)]
+#[derive(Drop, Debug, starknet::Store, Zero)]
 pub struct Game{
-    name: felt252,
-    desc: felt252,
-    company: felt252,
-    gold_id: u256,
-    gold_name: felt252,
+    pub name: felt252,
+    pub desc: felt252,
+    pub company: felt252,
+    pub gold_id: u256,
+    pub gold_name: felt252,
+    pub contract_address: ContractAddress,
 }
 
 #[derive(Drop, Debug, starknet::Store)]
 pub struct Item{
-    id: u256,
-    name: felt252,
-    desc: felt252,
+    pub id: u256,
+    pub name: felt252,
+    pub desc: ByteArray,
+    pub icon: ByteArray,
 }
 
 #[derive(Drop, Debug, starknet::Store)]
-pub struct Sell{
-    id: u256,
-    sell_addr: ContractAddress,
-    name: felt252,
-    symbol: felt252,
+pub struct Order{
+    pub id: u256,
+    pub item_id: u256,
+    pub owner_addr: ContractAddress,
+    pub amount: u256,
+    pub leftover: u256,
+    pub price: u256,
+    pub order_type: felt252,
+    pub close: bool,
+}
+
+#[derive(Drop, Debug, starknet::Store)]
+pub struct OrderLog{
+    pub id: u256,
+    pub order_id: u256,
+    pub op_addr: ContractAddress,
+    pub amount: u256,
+    pub price: u256,
 }
 
 #[derive(Drop, Debug, starknet::Store)]
 pub struct Buy{
-    id: u256,
-    sell_addr: ContractAddress,
-    name: felt252,
-    symbol: felt252
+    pub id: u256,
+    pub item_id: u256,
+    pub owner_addr: ContractAddress,
+    pub amount: u256,
+    pub leftover: u256,
+    pub price: u256,
 }
-
-
 
