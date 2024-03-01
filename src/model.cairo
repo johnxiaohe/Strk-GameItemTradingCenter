@@ -1,7 +1,7 @@
 use starknet::ContractAddress;
 
 #[derive(Drop, Debug, starknet::Store)]
-pub struct game{
+pub struct Game{
     name: felt252,
     desc: felt252,
     company: felt252,
@@ -10,22 +10,22 @@ pub struct game{
 }
 
 #[derive(Drop, Debug, starknet::Store)]
-pub struct item{
+pub struct Item{
     id: u256,
     name: felt252,
     desc: felt252,
 }
 
 #[derive(Drop, Debug, starknet::Store)]
-pub struct sell{
+pub struct Sell{
     id: u256,
     sell_addr: ContractAddress,
     name: felt252,
-    symbol: felt252
+    symbol: felt252,
 }
 
 #[derive(Drop, Debug, starknet::Store)]
-pub struct buy{
+pub struct Buy{
     id: u256,
     sell_addr: ContractAddress,
     name: felt252,
