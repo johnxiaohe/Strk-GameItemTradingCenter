@@ -13,7 +13,8 @@ pub trait IGameItemTradingCenter<TContractState> {
     fn consignment(ref self: TContractState, itemId: u256, amount: u256, price: u256, seller: ContractAddress) -> bool;
     fn buy(ref self: TContractState, buyer: ContractAddress, orderId: u256, amount: u256) -> bool;
     fn consignmentOrders(self: @TContractState, itemId: u256) -> (Array<Order>,bool);
-
+    
+    // 求购管理
     fn wantToBuy(ref self: TContractState, buyer: ContractAddress, itemId: u256, amount: u256, price: u256) -> bool;
     fn sell(ref self: TContractState, seller: ContractAddress, orderId: u256, amount: u256) -> bool;
     fn wantToBuyOrders(self: @TContractState, itemId: u256) -> (Array<Order>,bool);
