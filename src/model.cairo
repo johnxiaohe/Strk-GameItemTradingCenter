@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-#[derive(Drop, Debug, starknet::Store, Zero)]
+#[derive(Serde, Drop, Debug, starknet::Store, Zero)]
 pub struct Game{
     pub name: felt252,
     pub desc: felt252,
@@ -10,7 +10,7 @@ pub struct Game{
     pub contract_address: ContractAddress,
 }
 
-#[derive(Drop, Debug, starknet::Store)]
+#[derive(Serde, Drop, Debug, starknet::Store)]
 pub struct Item{
     pub id: u256,
     pub name: felt252,
@@ -18,7 +18,7 @@ pub struct Item{
     pub icon: ByteArray,
 }
 
-#[derive(Drop, Debug, starknet::Store)]
+#[derive(Serde, Drop, Debug, starknet::Store)]
 pub struct Order{
     pub id: u256,
     pub item_id: u256,
@@ -30,7 +30,7 @@ pub struct Order{
     pub close: bool,
 }
 
-#[derive(Drop, Debug, starknet::Store)]
+#[derive(Serde, Drop, Debug, starknet::Store)]
 pub struct OrderLog{
     pub id: u256,
     pub order_id: u256,
@@ -39,7 +39,7 @@ pub struct OrderLog{
     pub price: u256,
 }
 
-#[derive(Drop, Debug, starknet::Store)]
+#[derive(Serde, Drop, Debug, starknet::Store)]
 pub struct Buy{
     pub id: u256,
     pub item_id: u256,
